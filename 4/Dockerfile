@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:4-alpine
 
 RUN apk add --no-cache \
   jq \
@@ -11,7 +11,9 @@ RUN apk add --no-cache \
   libc-dev \
   rsync \
   py-pip \
+  zip \
   libstdc++ && \
-  npm install -g yarn
+  npm install -g yarn && \
+  pip install awscli
 
 CMD [ "node" ]
