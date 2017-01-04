@@ -1,9 +1,9 @@
-FROM node:alpine
+FROM node:6-alpine
 
 # Possible work-around to:
 #   https://github.com/yarnpkg/yarn/issues/1959
 #   https://github.com/yarnpkg/yarn/issues/627
-RUN echo 'user-agent "npm/v4.0.5 node/v7.4.0 linux x64"' > ~/.yarnrc
+RUN echo 'user-agent "npm/3.10.10 node/v6.9.3 linux x64"' > ~/.yarnrc
 
 RUN apk add --no-cache \
   jq \
