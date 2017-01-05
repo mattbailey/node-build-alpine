@@ -15,10 +15,13 @@ RUN apk add --no-cache \
   libgcc \
   libc-dev \
   rsync \
-  py-pip \
   zip \
+  groff \
+  bash \
+  less \
+  python3 \
   libstdc++ && \
   npm install -g yarn && \
-  pip install awscli
+  pip3 install awscli
 
 CMD [ "node" ]
