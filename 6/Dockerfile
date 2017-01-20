@@ -19,6 +19,7 @@ RUN apk add --no-cache \
   groff \
   bash \
   less \
+  imagemagick \
   python3 \
   libstdc++ && \
   npm install -g yarn && \
