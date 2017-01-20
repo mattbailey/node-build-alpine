@@ -12,7 +12,7 @@ ONBUILD RUN yarn config set registry $NPM_CONFIG_REGISTRY
 
 ONBUILD COPY package.json /usr/src/app
 ONBUILD COPY yarn.lock /usr/src/app
-ONBUILD RUN yarn
+ONBUILD RUN until yarn; do echo "*** Yarn retrying ***"; done
 ONBUILD COPY . /usr/src/app
 ONBUILD WORKDIR /usr/src/app
 
