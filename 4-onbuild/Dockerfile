@@ -3,8 +3,10 @@ FROM mattbailey/node-build-alpine:4
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ONBUILD ARG NODE_ENV
-ONBUILD ARG NPM_CONFIG_REGISTRY
+ONBUILD ARG NODE_ENV=production
+ONBUILD ARG NPM_CONFIG_REGISTRY=https://registry.npmjs.org
+ONBUILD ARG ENVIRONMENT=production
+ONBUILD ENV ENVIRONMENT $ENVIRONMENT
 ONBUILD ENV NODE_ENV $NODE_ENV
 ONBUILD ENV npm_config_progress false
 ONBUILD ENV npm_config_loglevel error
