@@ -2,6 +2,12 @@
 
 This is a base image with a little added on to library/node:alpine * :4-alpine
 
+# Env vars
+
+A few environment vars have been added as build `ARG`s with reasonable defaults so that you can customize the build.
+
+See any of the `-onbuild` `Dockerfile`s `ARG` lines.
+
 # Additions
 
 * jq
