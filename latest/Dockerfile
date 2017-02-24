@@ -21,6 +21,7 @@ RUN apk add --no-cache \
   less \
   imagemagick \
   python3 \
+  openssh-client \
   libstdc++ && \
   npm install -g yarn && \
   pip3 install awscli
