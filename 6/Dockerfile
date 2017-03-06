@@ -23,7 +23,6 @@ RUN apk add --no-cache \
   python3 \
   openssh-client \
   libstdc++ && \
-  npm install -g yarn && \
   pip3 install awscli
 
 CMD [ "node" ]
