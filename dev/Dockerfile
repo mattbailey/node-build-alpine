@@ -1,7 +1,7 @@
-FROM node:alpine
+FROM node:latest
 
-RUN apt-get update && \
-  apt-get -y -qq \
+RUN apt-get -y -qq update && \
+  apt-get -y -qq install \
   jq \
   zip \
   groff \
