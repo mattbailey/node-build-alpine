@@ -10,6 +10,7 @@ ENV DOCKER_ZIP=docker-1.12.6.tgz
 # Runtime
 RUN set -ex; \
   apk add --no-cache \
+    tar \
     ca-certificates \
     openssl \
     tini \
