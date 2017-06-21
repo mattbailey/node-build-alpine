@@ -1,4 +1,4 @@
-FROM node-build-alpine:dev
+FROM mattbailey/node-build-alpine:dev
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
