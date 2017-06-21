@@ -9,6 +9,8 @@ ENV DOCKER_ZIP=docker-1.12.6.tgz
 
 RUN set -ex; \
   apk add --no-cache \
+    ca-certificates \
+    openssl \
     zip \
     imagemagick; \
   wget -q ${CONSUL_RELEASE}/${CONSUL_ZIP}; \

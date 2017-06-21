@@ -14,6 +14,8 @@ ENV DOCKER_ZIP=docker-1.12.6.tgz
 
 RUN set -ex; \
   apk add --no-cache \
+    ca-certificates \
+    openssl \
     jq \
     curl \
     git \
