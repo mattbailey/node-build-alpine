@@ -1,4 +1,4 @@
-FROM mattbailey/node-build-alpine:dev
+FROM node-build-alpine:dev
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -6,10 +6,10 @@ WORKDIR /usr/src/app
 ONBUILD ARG NPM_CONFIG_REGISTRY=https://registry.npmjs.org
 ONBUILD ENV NPM_CONFIG_REGISTRY $NPM_CONFIG_REGISTRY
 
-ONBUILD ARG ENVIRONMENT=develop
+ONBUILD ARG ENVIRONMENT=production
 ONBUILD ENV ENVIRONMENT $ENVIRONMENT
 
-ONBUILD ARG NODE_ENV=development
+ONBUILD ARG NODE_ENV=production
 ONBUILD ENV NODE_ENV $NODE_ENV
 
 ONBUILD ARG GITHUB_TOKEN=''
@@ -18,11 +18,34 @@ ONBUILD ENV GITHUB_TOKEN $GITHUB_TOKEN
 ONBUILD ENV npm_config_progress false
 ONBUILD ENV npm_config_loglevel error
 
-ONBUILD RUN yarn config set registry $NPM_CONFIG_REGISTRY
+# Comments for labels are relative to using drone
+
+# Get rev SHA1: --build-arg LABEL_VCS_REF=${DRONE_COMMIT_SHA:-none}
+ONBUILD ARG LABEL_VCS_REF=none
+# Get git url: --build-arg LABEL_VCS_URL=${DRONE_REPO_LINK:-none}
+ONBUILD ARG LABEL_VCS_URL=none
+# Get name of this program: --build-arg LABEL_NAME=${DRONE_REPO_NAME:-none}
+ONBUILD ARG LABEL_NAME=none
+# Get version with: --build-arg LABEL_VERSION=${DRONE_TAG:-v0.0.0}
+ONBUILD ARG LABEL_VERSION=v0.0.0
+# Epoch 1 in RFC 3339
+#   Get correct time with: --build-arg LABEL_BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'`
+ONBUILD ARG LABEL_BUILD_DATE="1969-12-31T16:00:00Z"
+ONBUILD LABEL \
+  org.label-schema.vcs-ref=$LABEL_VCS_REF \
+  org.label-schema.vcs-url=$LABEL_VCS_URL \
+  org.label-schema.name=$LABEL_NAME \
+  org.label-schema.version=$LABEL_VERSION \
+  org.label-schema.schema-version=1.0 \
+  org.label-schema.build-date=$LABEL_BUILD_DATE
 
 ONBUILD COPY package.json /usr/src/app
 ONBUILD COPY yarn.lock /usr/src/app
-ONBUILD RUN until yarn; do echo "*** Yarn retrying ***"; done
+ONBUILD RUN yarn config set registry $NPM_CONFIG_REGISTRY; \
+  until yarn; \
+    do echo "*** Yarn retrying ***"; \
+  done && \
+  yarn cache clean
 ONBUILD COPY . /usr/src/app
 ONBUILD WORKDIR /usr/src/app
 
