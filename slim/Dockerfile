@@ -13,6 +13,7 @@ RUN set -ex; \
     ca-certificates \
     openssl \
     zip \
+    curl \
     imagemagick; \
   wget -q ${CONSUL_RELEASE}/${CONSUL_ZIP}; \
   wget -q ${VAULT_RELEASE}/${VAULT_ZIP}; \
