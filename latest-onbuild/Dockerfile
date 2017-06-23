@@ -1,6 +1,9 @@
-FROM mattbailey/node-build-alpine:latest
+FROM node:8-alpine
 
-RUN mkdir -p /usr/src/app
+RUN set -ex; \
+  mkdir -p /usr/src/app; \
+  apk --no-cache add tini
+
 WORKDIR /usr/src/app
 
 ONBUILD ARG NPM_CONFIG_REGISTRY=https://registry.npmjs.org
@@ -44,10 +47,14 @@ ONBUILD LABEL \
 
 ONBUILD COPY package.json /usr/src/app
 ONBUILD COPY yarn.lock /usr/src/app
-ONBUILD RUN yarn config set registry $NPM_CONFIG_REGISTRY; \
-  until yarn; \
+ONBUILD RUN set -ex; \
+  yarn config set registry $NPM_CONFIG_REGISTRY; \
+  until yarn install --prod --silent --skip-integrity-check --no-progress --no-emoji; \
     do echo "*** Yarn retrying ***"; \
-  done && \
-  yarn cache clean
+  done; \
+  yarn cache clean --force
 ONBUILD COPY . /usr/src/app
 ONBUILD WORKDIR /usr/src/app
+
+ONBUILD ENTRYPOINT ["/sbin/tini", "--"]
+ONBUILD CMD ["yarn", "start"]
