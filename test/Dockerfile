@@ -34,6 +34,10 @@ RUN set -ex; \
     libgcc \
     libstdc++ \
     imagemagick; \
+    wget -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub \
+    wget -O /tmp/glibc-2.25-r0.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.25-r0/glibc-2.25-r0.apk \
+    apk add --no-cache /tmp/glibc-2.25-r0.apk \
+    rm /tmp/glibc-2.25-r0.apk \
     pip3 install awscli
 
 ENTRYPOINT ["/sbin/tini", "--"]
