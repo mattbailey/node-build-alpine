@@ -49,7 +49,7 @@ ONBUILD COPY package.json /usr/src/app
 ONBUILD COPY yarn.lock /usr/src/app
 ONBUILD RUN set -ex; \
   yarn config set registry $NPM_CONFIG_REGISTRY; \
-  until yarn install --prod --silent --skip-integrity-check --no-progress --no-emoji; \
+  until yarn install --silent --skip-integrity-check --no-progress --no-emoji; \
     do echo "*** Yarn retrying ***"; \
   done; \
   yarn cache clean --force
