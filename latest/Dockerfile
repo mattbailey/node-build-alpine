@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:8-alpine
 
 ENV CONSUL_RELEASE=https://releases.hashicorp.com/consul/0.8.4
 ENV CONSUL_ZIP=consul_0.8.4_linux_amd64.zip
